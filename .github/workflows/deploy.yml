@@ -19,7 +19,9 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
 
       - name: Build docker image
-        run: docker build -t conjunrad/test_project:v${{ vars.GITHUB_RUN_ID }} . --push
+        run: |
+          cd flask-app
+          docker build -t conjunrad/test_project:v${{ vars.GITHUB_RUN_ID }} . --push
 
   deploy:
     runs-on: ubuntu-latest
