@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: conjunrad/test_project
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: "app.devops3.test-danit.com"
+      paths:
+        - path: /
+          pathType: prefix
