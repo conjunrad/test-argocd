@@ -36,7 +36,7 @@ jobs:
           sed -i 's/\(tag:\).*/\1 v${GITHUB_RUN_ID}/' helm-chart/values.yaml
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'conjunrad@gmail.com'
-          git remote set-url origin https://conjunrad:${{ secrets.PAT }}@github.com/conjunrad/test-argocd/
+          git remote set-url --push origin https://conjunrad:${{ secrets.PAT }}@github.com/conjunrad/test-argocd/
           git add .
           git commit -m "Update version of app"
           git push
