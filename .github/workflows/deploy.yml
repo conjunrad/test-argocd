@@ -21,7 +21,7 @@ jobs:
       - name: Build docker image
         run: |
           cd flask-app
-          docker build -t conjunrad/test_project:v${{ github.GITHUB_RUN_ID }} . --push
+          docker build -t conjunrad/test_project:v${GITHUB_RUN_ID} . --push
 
   deploy:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
 
       - name: Update Helm values
         run: |
-          sed -i "/s/\(tag:\).*/\1 ${{ github.GITHUB_RUN_ID }}" helm-chart/values.yaml
+          sed -i "s/\(tag:\).*/\1 ${GITHUB_RUN_ID}" helm-chart/values.yaml
           git config user.name "GitHub CI"
           git config user.email "github-actions@github.com"
           git add .
