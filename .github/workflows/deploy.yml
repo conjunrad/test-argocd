@@ -34,5 +34,6 @@ jobs:
           sed -i "/s/tag: .*/tag: ${{ vars.GITHUB_RUN_ID }}" helm-chart/values.yaml
           git config user.name "GitHub CI"
           git config user.email "github-actions@github.com"
-          git commit -am "Update version of app"
+          git add .
+          git commit -m "Update version of app"
           git push
