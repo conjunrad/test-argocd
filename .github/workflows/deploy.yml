@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "**.py"
-      - "Dockerfile"
+      - "flask-app/Dockerfile"
 
 jobs:
   build:
