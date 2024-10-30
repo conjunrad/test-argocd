@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: conjunrad/test_project
-  tag: v1.0.1
+  tag: v${GITHUB_RUN_ID}
   pullPolicy: IfNotPresent
 
 service:
