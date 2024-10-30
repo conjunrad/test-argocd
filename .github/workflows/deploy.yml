@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --pasword-stdin
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
 
       - name: Build docker image
         run: docker build -t conjunrad/test_project:v${{ vars.GITHUB_RUN_ID }} . --push
