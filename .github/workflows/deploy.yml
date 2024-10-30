@@ -1,0 +1,38 @@
+name: Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - "Dockerfile"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --pasword-stdin
+
+      - name: Build docker image
+        run: docker build -t conjunrad/test_project:v${{ vars.GITHUB_RUN_ID }} . --push
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update Helm values
+        run: |
+          sed -i "/s/tag: .*/tag: ${{ vars.GITHUB_RUN_ID }}" helm-chart/values.yaml
+          git config user.name "GitHub CI"
+          git config user.email "github-actions@github.com"
+          git commit -am "Update version of app"
+          git push
